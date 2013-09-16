@@ -111,17 +111,15 @@ inputChanged: function(marker_id) {
 		OSRM.Geocoder.call(OSRM.C.TARGET_LABEL, document.getElementById('gui-input-target').value);
 },
 
-// click: button "open JOSM"
+// click: button "open JOSM", actually opens user's default editor (Potlatch2, ID...)
 openJOSM: function() {
-	var zoom = OSRM.G.map.getZoom();
-	if( zoom < OSRM.DEFAULTS.EDITOR_MIN_ZOOM_LEVEL ) {
-		window.alert( OSRM.loc("OPEN_JOSM_FAILED") );
-	} else {
-		var position = OSRM.G.map.getCenterUI();
-		var pr = OSRM.C.PRECISION;
-		window.open( "http://www.openstreetmap.org/edit?lat="+position.lat.toFixed(pr)+"&lon="+position.lng.toFixed(pr)+"&zoom="+zoom );
-	}	
-},
+        var zoom = OSRM.G.map.getZoom();
+        if( zoom < OSRM.DEFAULTS.EDITOR_MIN_ZOOM_LEVEL )
+                zoom = OSRM.DEFAULTS.EDITOR_MIN_ZOOM_LEVEL;
+        var position = OSRM.G.map.getCenterUI();
+        var pr = OSRM.C.PRECISION;
+        window.open( "http://www.openstreetmap.org/edit?lat="+position.lat.toFixed(pr)+"&lon="+position.lng.toFixed(pr)+"&zoom="+zoom );
+}},
 
 //click: button "open OSM Bugs"
 openOSMBugs: function() {
