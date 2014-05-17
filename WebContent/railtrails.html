@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+ <!--[if lte IE 8]>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+ <![endif]-->
+<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<style>
+    #states { 
+        top: 0px;  width: 15%; 
+        height: 29px;
+        position: absolute;
+        float: left;
+        font-family: sans-serif;
+        background:hsla(200, 10%, 80%,0.35); 
+    }
+    .trailslist { 
+        height: 800px; width: 15%; 
+        background:hsla(200, 10%, 80%,0.35); 
+        margin:0;
+        padding: 4px;
+        position: absolute;
+        float: left;
+        top: 30px;
+    }
+    .trailslist a { 
+        display:block; font-family: sans-serif;
+        color: #333;
+        text-shadow: 1px 1px 3px #888, 0px 0px 1px white, 1px 0px 1px white, -1px 0px 1px white, 0px 1px 1px white, 0px -1px 1px white, 
+        0px 0px 2px white, 1px 0px 2px white, -1px 0px 2px white, 0px 1px 2px white, 0px -1px 2px white;
+        text-decoration:none;
+    }
+    .trailslist a:visited, .trailslist a { color: #117;}
+    #map { 
+        top: 0; bottom:0; left:0; right: 0;
+        position: absolute;
+    }
+    #nswtrails, #qldtrails, #tastrails, #satrails, #watrails { display: none; }
+
+    div.leaflet-control-zoom { margin-left: 230px !important; }
+    h3 { font-family: sans-serif; margin: 0; text-decoration:underline;}
+</style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="states">
+        <a href="#" id="vic">Vic</a> 
+        <a href="#" id="nsw">NSW</a> 
+        <a href="#" id="qld">QLD</a> 
+        <a href="#" id="sa">SA</a> 
+    </div>
+    <div id="victrails" class="trailslist">
+    <h3>Western</h3>
+    <a href="#" id="bs" data-loc="-37.69686, 143.64899, 11">Ballarat-Skipton</a>
+    <a href="#" id="ob" data-loc="-38.46649, 143.5858, 11">Old Beechy</a>
+    <a href="#" id="c2c" data-loc="-38.35889, 143.03375, 11">Crater to Coast</a>
+    <a href="#" id="tiger" data-loc="-38.50143, 143.72589, 13">Tiger</a>
+    <a href="#" id="pfw" data-loc="-38.34273, 142.37457, 12">Port Fairy-Warrnambool</a>
+    <a href="#" id="hc" data-loc="-37.70555, 141.91864, 13">Hamilton Coleraine</a>
+    <a href="#" id="grampians" data-loc="-37.05518, 142.70142, 13">Grampians</a>
+    <a href="#" id="gdrt" data-loc="-37.3928, 144.12003, 13">Great Divide</a>
+    <a href="#" id="domino" data-loc="-37.3868, 144.31297, 14">Domino</a>
+    <a href="#" id="bunny" data-loc="-37.56138, 143.88408, 15">Bunny</a>
+    <h3>Northern</h3>
+    <a href="#" id="grhcrt" data-loc="-37.160, 145.654, 10">Goulburn River High Country</a>
+    <a href="#" id="m2m" data-loc="-36.55378, 146.69769, 11">Murray to Mountains</a>
+    <small><a href="#" id="m2mrw" data-loc="-36.02967, 146.43402, 13">Rutherglen-Wagunhyah</a></small>
+    <a href="#" id="hcrt" data-loc="-36.2199, 147.25, 11">High Country</a>
+    <a href="#" id="mr" data-loc="-36.58714, 145.0221, 15">Murchison-Rushworth</a>
+    <a href="#" id="dookie" data-loc="-36.30517, 145.69519, 13">Dookie</a>
+    <a href="#" id="ok" data-loc="-36.78509, 144.40842, 12">O'Keefe</a>
+    <h3>Gippsland</h3>
+    <a href="#" id="gp" data-loc="-38.1, 146.80069, 11">Gippsland Plains</a>
+    <a href="#" id="egrt" data-loc="-37.73162, 148.10669, 11">East Gippsland</a>
+    <a href="#" id="gldt" data-loc="-37.81073, 147.94516, 12">Gippsland Lakes</a>
+    <a href="#" id="tt" data-loc="-38.6158, 146.6716, 12">Tarra Trail</a>
+    <a href="#" id="gsrt" data-loc="-38.58145, 146.02615,11">Great Southern</a>
+    <a href="#" id="gr" data-loc="-38.38042, 146.23077, 13">Grand Ridge</a>
+    <a href="#" id="bc" data-loc="-38.56723, 145.5233, 13">Bass Coast</a>
+    <a href="#" id="my" data-loc="-38.17127, 146.30596, 14">Moe-Yallourn</a>
+    <a href="#" id="tj" data-loc="-37.98, 146.34132, 14">Tyers Junction</a>
+    <a href="#" id="walhalla" data-loc="-37.97133, 146.4068, 14">Walhalla</a>
+    <a href="#" id="ntb" data-loc="-37.89599, 145.9938, 14">Noojee Trestle Bridge</a>
+    <a href="#" id="rc" data-loc="-38.05877, 145.94925, 14">Rokeby-Crossover</a>
+    <h3>Melbourne region</h3>
+    <a href="#" id="rh" data-loc="-38.38204, 145.062, 13">Red Hill</a>
+    <a href="#" id="kooweerup" data-loc="-38.20096, 145.49263, 15">Koo Wee Rup</a>
+    <a href="#" id="bellarine" data-loc="-38.20204, 144.45, 12">Bellarine</a>
+    <a href="#" id="lw" data-loc="-37.76094, 145.5043, 12">Lilydale-Warburton</a>
+    <a href="#" id="belgrave" data-loc="-37.8632, 145.28578, 13">Belgrave</a>
+    <a href="#" id="rosstown" data-loc="-37.89653, 145.03361, 14">Rosstown</a>
+    <a href="#" id="sandridge" data-loc="-37.83256, 144.94572, 15">Sandridge</a>
+    <!-- <a href="#" id="wdb" data-loc="-37.82355, 144.94735, 16">Webb Dock Bridge</a> -->
+    <a href="#" id="ic" data-loc="-37.78021, 144.97627, 15">Inner Circle</a>
+    <a href="#" id="oc" data-loc="-37.83216, 145.0705, 13">Outer Circle</a>
+    <a href="#" id="hk" data-loc="-37.81738, 145.03155, 15">Hawthorn-Kew</a>
+    </div>
+
+    <div id="nswtrails" class="trailslist">
+        <a href="#" id="fernleigh" data-loc="-32.99, 151.68772, 13">Fernleigh Track</a>
+        <a href="#" id="paramatta" data-loc="-33.86357, 150.97137, 13">Paramatta-Liverpool Railside Trail</a>
+        <a href="#" id="wolgan" data-loc="-33.18307, 150.2525, 13">Wolgan Valley</a>
+        <br/>
+        <small><a href="#" id="riverina" data-loc="-35.38793, 147.7565, 12">Riverina Highlands (potential)</a>
+        <a href="#" id="casino" data-loc="-28.59794, 153.54063, 12">Casino-Murwillumbah (potential)</a>
+        <a href="#" id="newengland" data-loc="-30.2193, 151.6747, 12">New England (potential)</a>
+        </small>
+    </div>
+    <div id="satrails" class="trailslist">
+        <a href="#" id="coast" data-loc="-35.15, 138.53073, 12">Coast to Vines</a>
+        <a href="#" id="southernflinders" data-loc="-32.9, 138.3, 10">Southern Flinders</a>
+        <a href="#" id="riesling" data-loc="-33.899, 138.651, 11">Riesling Trail</a>
+        <a href="#" id="rattler" data-loc="-34.0896, 138.7189, 12">Rattler Trail</a>
+        <a href="#" id="barossa" data-loc="-34.5048, 138.998, 14">Barossa Trail</a>
+        <a href="#" id="amygillett" data-loc="-34.9428,138.8762,13">Amy Gillett Bikeway</a>
+        <a href="#" id="nurragi" data-loc="-35.3685,138.8994,14">Nurragi</a>
+        <a href="#" id="westside" data-loc="-34.93794,138.5756,14">Westside Bike Path</a>
+        <!--<a href="#" id="" data-loc=""></a>-->  
+    </div>
+    <script>
+        $(function() {
+
+            currentstate = $("#victrails");
+
+            var map = L.map('map').setView([-37.0, 145.1], 8);
+            // Did they come in on a map2.html#by-sa
+        //var ts=Math.round(new Date().getTime()/1000.0);
+
+        //var ts=Math.round(new Date().getTime()/(86400.0 * 1000.0));
+        //var url="http://cycletour.org/tile/SteveCountryVic/{z}/{x}/{y}.png?updated="+ts;
+        var url = 'http://cycletour.org/tile/SteveCountryVic/{z}/{x}/{y}.png';
+        L.tileLayer(url, {
+            maxZoom: 16,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+        }).addTo(map);
+
+        var popup = L.popup();
+
+        function onMapClick(e) {
+/*            popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(map);*/
+        }
+
+        function showState(statediv) {
+            currentstate.hide();
+            currentstate = statediv;
+            currentstate.show();
+        }
+
+        map.on('click', onMapClick);
+
+
+        $("#vic").on('click', function() { showState($("#victrails"));  });
+        $("#qld").on('click', function() { showState($("#qldtrails"));  });
+        $("#nsw").on('click', function() { showState($("#nswtrails"));  });
+        $("#sa").on('click', function() { showState($("#satrails"));  });
+
+
+        $(".trailslist a").on('click', function() { 
+            //console.log($(this).data("loc"));
+            loc = JSON.parse("[" + $(this).data("loc") + "]");
+            map.setView(loc.slice(0,2), loc[2]);
+        });
+
+        $(".trailslist a").each(function( index ) {
+            this.href = "#" + this.id;
+            
+            this.id="a-" + this.id;
+        });
+
+        var anchor = window.location.href.substring((window.location.href+"#").indexOf("#")+1,1000);
+        // quick kludge to make anchors not scroll.
+        if (anchor != "") {
+            //console.log("Going to ")
+            $("#a-" + anchor).click();
+        }
+
+        });
+    </script>
+
+</body>
+</html>

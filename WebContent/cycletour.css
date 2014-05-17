@@ -1,0 +1,86 @@
+#input-mask-header {
+  background-image: none;
+}
+h3 { margin: 0; }
+
+h4 { margin-top: 0; margin-left: 0; }
+
+h4 {
+  font-weight:normal;
+  font-style:italic;
+}
+
+#gui-language-toggle,#styled-select-gui-language-toggle {
+    display:none;
+}
+
+#main-wrapper {
+    width: 345px;
+    /*left: 0 !important;*/
+    top:0;
+    background:none;
+}
+
+#main-input,#main-output {
+    margin-left:-5px;
+    margin-top:0;
+    border-radius:0;
+    border-right: 1px solid #ccf;
+}
+#main-input { 
+    width: 320px;
+    background:hsla(240,15%,88%,0.8);
+}
+#main-output {
+    width: 330px;
+    padding: 0;
+    top:150px;
+    border-bottom: 1px solid #ccf;
+    background:hsla(240,15%,90%,0.6);
+}
+
+#information-box { 
+    width:330px; 
+    margin: 0;
+    
+}
+
+.input-label {
+    display:none;
+}
+
+.center.stretch .input-box { width: 115%; }
+
+.button {
+    background:none;
+    border:none;
+    padding:0;
+}
+
+#main-toggle {
+    top: 2px;
+    left: 312px;
+    position:absolute;
+}
+
+#input-mask { margin: 0; }
+#input-mask-header h4 { height: 0px; }
+
+#information-box-header .header-subtitle {
+    margin-left:0;
+    font-size: 10px;
+    color:black;
+}
+
+#information-box-header .header-title {
+    color:transparent; /* We can't hide it because it contains .header-subtitle */
+    font-size:0px;
+}
+
+.header-label {
+    display:none !important; /* "Distance: ... Time: ..." */
+}
+
+@media handheld {
+  h3 { display:none; }
+}

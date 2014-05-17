@@ -55,11 +55,9 @@ OSRM.Localization["en"] = {
 "GUI_HIGHLIGHT_UNNAMED_ROADS": "Highlight unnamed streets",
 "GUI_SHOW_PREVIOUS_ROUTES": "Show previous routes",
 "GUI_EXTERNAL_TOOLS": "External Tools:",
-"OPEN_EDITOR": "Editor",
-"OPEN_JOSM": "JOSM",
+"OPEN_JOSM": "Editor",
 "OPEN_OSMBUGS": "Notes",
-"OPEN_EDITOR_FAILED": "Zoom closer to open osm editor.",
-"OPEN_JOSM_FAILED": "Zoom closer to open josm.",
+"OPEN_JOSM_FAILED": "Zoom closer to open osm editor.",
 "OPEN_OSMBUGS_FAILED": "Zoom closer to place a note.",
 // geocoder
 "SEARCH_RESULTS": "Search Results",
@@ -70,11 +68,11 @@ OSRM.Localization["en"] = {
 "NO_RESULTS_FOUND_TARGET": "No results found for end",
 // routing
 "ROUTE_DESCRIPTION": "Route Description",
-"GET_LINK_TO_ROUTE": "Generate Link",
+"GET_LINK_TO_ROUTE": "Link",
 "ROUTE_LINK": "Route Link",
 "GENERATE_LINK_TO_ROUTE": "waiting for link",
 "LINK_TO_ROUTE_TIMEOUT": "not available",
-"GPX_FILE": "GPX File",
+"GPX_FILE": "GPX",
 "DISTANCE": "Distance",
 "DURATION": "Duration",
 "YOUR_ROUTE_IS_BEING_COMPUTED": "Your route is being computed",
@@ -84,7 +82,6 @@ OSRM.Localization["en"] = {
 "NO_ROUTE_SELECTED": "No route selected",
 // routing engines
 "ENGINE_0": "Car (fastest)",
-"ENGINE_1": "Bike (fastest)",
 // tile server names
 // (only required if names are different to OSRM.config)
 //"TILE_SERVER_0": "osm.org",
@@ -130,31 +127,6 @@ OSRM.Localization["en"] = {
 "DIRECTION_11-9":"Enter roundabout and leave at nineth exit[ onto <b>%s</b>]",
 "DIRECTION_11-x":"Enter roundabout and leave at one of the too many exits[ onto <b>%s</b>]",
 "DIRECTION_15":"You have reached your destination",
-// street types
-"HIGHWAY_DEFAULT": "road",
-"HIGHWAY_PATH": "path",
-"HIGHWAY_FOOTWAY": "footway",
-"HIGHWAY_CYCLEWAY": "cycleway",
-"HIGHWAY_BRIDLEWAY": "bridleway",
-"HIGHWAY_STEPS": "steps",
-"HIGHWAY_MOTORWAY": "highway",
-"HIGHWAY_MOTORWAY_LINK": "highway",
-"HIGHWAY_TRUNK": "road",
-"HIGHWAY_TRUNK_LINK": "road",
-"HIGHWAY_PRIMARY": "road",
-"HIGHWAY_PRIMARY_LINK": "road",
-"HIGHWAY_SECONDARY": "road",
-"HIGHWAY_SECONDARY_LINK": "road",
-"HIGHWAY_TERTIARY": "road",
-"HIGHWAY_TERTIARY_LINK": "road",
-"HIGHWAY_LIVING_STREET": "residental road",
-"HIGHWAY_PEDESTRIAN": "pedestrian street",
-"HIGHWAY_RESIDENTAL": "residental road",
-"HIGHWAY_unclassified": "road",
-"HIGHWAY_service": "service road",
-"HIGHWAY_track": "track",
-"HIGHWAY_raceway": "racetrack",
-"HIGHWAY_road": "road",
 // notifications
 "NOTIFICATION_MAINTENANCE_HEADER":	"Scheduled Maintenance",
 "NOTIFICATION_MAINTENANCE_BODY":	"The OSRM Website is down for a scheduled maintenance. " + 
@@ -180,10 +152,6 @@ OSRM.Localization["en"] = {
 									"Then you can move the marker around the map and the route will be updated instantaneously. " +
 									"<br/><br/>" +
 									"You can even create intermediate markers by dragging them off of the main route! ",
-"NOTIFICATION_GEOCODERWAIT_HEADER":	"Waiting on Geocoder",
-"NOTIFICATION_GEOCODERWAIT_BODY":	"Waiting on results from geocoder.",
-"NOTIFICATION_GEOCODERFAIL_HEADER":	"Geocoder Failure",
-"NOTIFICATION_GEOCODERFAIL_BODY":	"Failed to retrieve coordinates from geocoder.",
 // do not translate below this line
 "GUI_LEGAL_NOTICE": "Routing by <a href='http://project-osrm.org/'>Project OSRM</a> - Geocoder by <a href='http://wiki.openstreetmap.org/wiki/Nominatim'>Nominatim</a> - OSRM hosting by <a href='http://algo2.iti.kit.edu/'>KIT</a>",
 "GUI_DATA_TIMESTAMP": "data: ",

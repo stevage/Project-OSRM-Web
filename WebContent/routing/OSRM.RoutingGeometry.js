@@ -18,7 +18,7 @@ or see http://www.gnu.org/licenses/agpl.txt.
 // OSRM routing geometry
 // [renders routing geometry]
 
-OSRM.CONSTANTS.PRECISION = 6;
+OSRM.CONSTANTS.PRECISION = 5;
 
 OSRM.RoutingGeometry = {
 
@@ -63,6 +63,8 @@ _decode: function(encoded, precision) {
 		//array.push( {lat: lat * precision, lng: lng * precision} );
 		array.push( [lat * precision, lng * precision] );
 	}
+	// Added by Stevage, no idea why it's needed. 
+	for (i=0; i< array.length;i++) { array[i][0] /= 10.0; array[i][1] /= 10.0; }
 	return array;
 }
 
