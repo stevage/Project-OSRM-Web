@@ -54,7 +54,24 @@ init: function() {
 		overlay_servers[i].options.attribution = overlay_servers[i].attribution;
 		overlay_maps[ overlay_servers[i].display_name ] = new L.TileLayer( overlay_servers[i].url, overlay_servers[i].options );
 		L.Util.stamp( overlay_maps[ overlay_servers[i].display_name ] );			// stamp tile servers so that their order is correct in layers control
-	}	
+	}
+	
+	var pois = new XMLHttpRequest();
+    pois.open("GET","http://cycletour.org/map.geojson",true);
+     
+    pois.onreadystatechange = function() {
+      if (pois.readyState == 4 && pois.status == 200) {
+          geojson = JSON.parse(pois.responseText); 
+          glayer = L.geoJson(geojson, { 
+            onEachFeature: function (feature, layer) { 
+              layer.bindPopup(feature.properties.description); 
+              } 
+            });
+          overlay_maps["Tour wisdom"] = glayer;
+          OSRM.G.map.layerControl.addOverlay(glayer, "Tour wisdom"); // potential race condition here.
+        }
+    }
+    pois.send(null);
 
 	// setup map
 	OSRM.G.map = new OSRM.Control.Map('map', {
