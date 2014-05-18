@@ -5907,6 +5907,78 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tamboritha Road",
+        "description": "The Tamboritha Road may be the biggest climb you've never heard of. A gentle sealed meander through the popular campsites of the Wellington valley give way to a more determined climb. From the Lake Tali Karng it's all unsealed, winding through numerous cuttings until the beautiful alpine plateau is reached, 1300m in total."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            146.62799835205078,
+            -37.62646856436861
+          ],
+          [
+            146.63143157958984,
+            -37.60960796831328
+          ],
+          [
+            146.6458511352539,
+            -37.60253625794437
+          ],
+          [
+            146.62628173828125,
+            -37.571249476602766
+          ],
+          [
+            146.61632537841797,
+            -37.5505657787059
+          ],
+          [
+            146.61151885986328,
+            -37.53232670413313
+          ],
+          [
+            146.61701202392575,
+            -37.5184402388786
+          ],
+          [
+            146.66885375976562,
+            -37.508908816149834
+          ],
+          [
+            146.6781234741211,
+            -37.49801427113725
+          ],
+          [
+            146.68601989746094,
+            -37.503189378240705
+          ],
+          [
+            146.7000961303711,
+            -37.49147678107553
+          ],
+          [
+            146.71108245849607,
+            -37.47703779669805
+          ],
+          [
+            146.74747467041016,
+            -37.45987084597064
+          ],
+          [
+            146.76292419433594,
+            -37.43861106453426
+          ],
+          [
+            146.78455352783203,
+            -37.419799298802864
+          ]
+        ]
+      }
     }
   ]
 }
