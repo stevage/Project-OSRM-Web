@@ -5979,6 +5979,86 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Murray to Mountains Rail Trail (Beechworth branch)",
+        "description": "Uphill or down, the Beechworth branch of the Murray to Mountains Rail Trail is one of the nicest stretches of rail trail around. Alternating serious embankments with deep cuttings, the constant grade doesn't muck around, but you've got a great brewery to look forward. On the descent, mix things up with the mountain bike trail running on your left through the middle section."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            146.68996810913086,
+            -36.3625544425956
+          ],
+          [
+            146.6813850402832,
+            -36.375132876637636
+          ],
+          [
+            146.68207168579102,
+            -36.38273424086821
+          ],
+          [
+            146.67829513549805,
+            -36.38715651090264
+          ],
+          [
+            146.6707420349121,
+            -36.38909117495406
+          ],
+          [
+            146.66627883911133,
+            -36.39226944709636
+          ],
+          [
+            146.65254592895505,
+            -36.396552999605824
+          ],
+          [
+            146.6403579711914,
+            -36.40332329468629
+          ],
+          [
+            146.62628173828125,
+            -36.40470491509095
+          ],
+          [
+            146.61769866943357,
+            -36.40719176991133
+          ],
+          [
+            146.6122055053711,
+            -36.41092190289531
+          ],
+          [
+            146.6044807434082,
+            -36.41299412160809
+          ],
+          [
+            146.59727096557617,
+            -36.41244153535643
+          ],
+          [
+            146.58456802368164,
+            -36.42045365124901
+          ],
+          [
+            146.5770149230957,
+            -36.41962485000306
+          ],
+          [
+            146.56122207641602,
+            -36.415895134935745
+          ],
+          [
+            146.5480041503906,
+            -36.40788254879093
+          ]
+        ]
+      }
     }
   ]
 }
