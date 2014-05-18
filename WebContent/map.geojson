@@ -5469,6 +5469,20 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wunghnu",
+        "description": "You've likely never heard of the tiny town of Wunghnu (pronounced \"one-ewe\" - leading to a classic sheep joke), but make an effort to spend an evening at its pub, the Innstitute Tavern. A lot of local character has turned this old Mechanic's Institute into a very quirky pub, with lots of in-jokes, odd signs and curios festooned around the walls. Plus, the port is cheap."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.4320764541626,
+          -36.15404121554955
+        ]
+      }
     }
   ]
 }
