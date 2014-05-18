@@ -6059,6 +6059,20 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bendigo",
+        "descriptin": "Bendigo has done a lot for cyclists. The O'Keefe Rail Trail begins here, reaching Heathcote by the end of 2014, and one day Heathcote Junction. The Bendigo Bushland Trail makes a beautiful circumnavigation of the town's outskirts, and the Goldfields Trail gives an awesome mountain bike journey from here to Bunyinong. Throw in some well defined road routes, lots of interesting historical sites to explore, and great terrain for mountain biking, and be patient that a microbrewery might one day open up."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.28173065185547,
+          -36.757865644148445
+        ]
+      }
     }
   ]
 }
