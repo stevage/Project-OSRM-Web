@@ -6643,6 +6643,38 @@
           -37.34068368469043
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Queenscliff-Sorrento ferry",
+        "description": "Taking the ferry across the heads beats a return trip anyday. Bikes are carried without fuss, and there are several crossings per day."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            144.67174530029297,
+            -38.26500643969224
+          ],
+          [
+            144.7254753112793,
+            -38.294921602441434
+          ],
+          [
+            144.73491668701172,
+            -38.30462117003049
+          ],
+          [
+            144.74830627441406,
+            -38.33573186071831
+          ],
+          [
+            144.7441005706787,
+            -38.33768425094416
+          ]
+        ]
+      }
     }
   ]
 }
