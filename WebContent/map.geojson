@@ -6629,6 +6629,20 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Daylesford",
+        "description": "A cidery, a chocolate mill, great cafes, a rail trail, and it's at the junction of the epic Goldfields and Lerderderg mountain bike routes. If the Woodend-Daylesford Rail Trail eventuates, Daylesford's cycle tourism will be unstoppable."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.14337158203125,
+          -37.34068368469043
+        ]
+      }
     }
   ]
 }
