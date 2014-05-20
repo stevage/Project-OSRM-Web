@@ -1,3 +1,5 @@
+body { padding: 0; margin: 0; height: 100%; }
+html, #map { height: 100%; }
 #input-mask-header {
   background-image: none;
 }
@@ -16,6 +18,7 @@ h4 {
 
 #main-wrapper {
     width: 345px;
+    max-width: 20%;
     /*left: 0 !important;*/
     top:0;
     background:none;
@@ -24,15 +27,19 @@ h4 {
 #main-input,#main-output {
     margin-left:-5px;
     margin-top:0;
+    margin-right:0;
+    /*padding-right:0;*/
     border-radius:0;
     border-right: 1px solid #ccf;
 }
 #main-input { 
-    width: 320px;
+    /*width: 320px;*/
+    width: 90%;
     background:hsla(240,15%,88%,0.8);
 }
 #main-output {
-    width: 330px;
+    /*width: 330px;*/
+    width: 95%;
     padding: 0;
     top:150px;
     border-bottom: 1px solid #ccf;
@@ -49,8 +56,8 @@ h4 {
     display:none;
 }
 
-.center.stretch .input-box { width: 115%; }
-
+/*.center.stretch .input-box { width: 115%; }
+*/
 .button {
     background:none;
     border:none;
@@ -59,8 +66,8 @@ h4 {
 
 #main-toggle {
     top: 2px;
-    left: 312px;
-    position:absolute;
+    /*left: 22%;*/
+    /*position:absolute;*/
 }
 
 #input-mask { margin: 0; }
@@ -81,6 +88,44 @@ h4 {
     display:none !important; /* "Distance: ... Time: ..." */
 }
 
-@media handheld {
-  h3 { display:none; }
+@media only screen and (max-device-width : 1024px) {
+  /*h3 { background: red; } */
+  .leaflet-right { a.gui-control, a.gui-control-inactive { padding: 0 !important; } }
+  #gui-search-source, #gui-search-target { display: none; }
+}
+
+.leaflet-right .leaflet-control {
+  margin-right: 0;
+}
+
+.leaflet-top .leaflet-control{
+  margin-top: 0;
+}
+.leaflet-left .leaflet-control {
+  margin-left: 0;
+}
+
+.leaflet-left .leaflet-control { top: 0 !important; }
+
+.leaflet-left .leaflet-control.box-wrapper { 
+  left: 280px !important; 
+}
+
+a.gui-zoom-in, a.gui-zoom-out {
+  margin: 0;
+  padding: 10px;
+  border-radius: 0;
+}
+
+.gui-locations-route, .gui-locations-route-inactive { display: none; }
+
+/*.input-marker > div { min-width: 100px; }
+*/
+
+#input-mask .full, 
+#input-mask .input-marker { display: block; } 
+#input-mask .left, 
+#input-mask .center, 
+#input-mask .right { display: inline-block; float:left;}
+  /*.input-marker { display: block */
 }
