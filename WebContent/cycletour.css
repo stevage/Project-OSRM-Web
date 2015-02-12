@@ -1,3 +1,5 @@
+
+
 body { padding: 0; margin: 0; height: 100%; }
 html, #map { height: 100%; }
 #input-mask-header {
@@ -47,9 +49,14 @@ h4 {
 }
 
 #information-box { 
-    width:330px; 
+    width:275px; 
     margin: 0;
+    margin-top:1em;
     
+}
+
+.description-body-item {
+  font-size:8px;
 }
 
 .input-label {
@@ -122,10 +129,40 @@ a.gui-zoom-in, a.gui-zoom-out {
 /*.input-marker > div { min-width: 100px; }
 */
 
+
+
 #input-mask .full, 
 #input-mask .input-marker { display: block; } 
 #input-mask .left, 
 #input-mask .center, 
 #input-mask .right { display: inline-block; float:left;}
   /*.input-marker { display: block */
+
+
+
+/* Elevation charts */
+#chart-box {
+  position:absolute;
+  left:30%;
+  width:40%;
+  height:100px;
+  bottom: 0%;
+  margin:2em;
+  margin-bottom:3em;
+  background:hsla(60,20%,90%,0.6);
+  border: 1px solid gray;
+  box-shadow: 2px 2px 4px 0px #777;
+  display:none;
+}
+
+#chart {
+/*max-height: 200px;*/
+}
+
+path.c3-line-Elevations {
+  stroke: hsl(0,50%,50%) !important;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-antialiasing:true;
+
 }

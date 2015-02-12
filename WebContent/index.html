@@ -40,7 +40,8 @@ or see http://www.gnu.org/licenses/agpl.txt.
 <script src="base/leaflet/L.Bugfixes.js" type="text/javascript"></script>
 <script src="base/leaflet/L.LabelMarker.js" type="text/javascript"></script>
 <script src="base/leaflet/L.LabelMarkerIcon.js" type="text/javascript"></script>
-
+<script src="cycletour/turf.min.js" charset="utf-8"></script>
+    
 <script src="OSRM.base.js" type="text/javascript"></script>
 <script src="OSRM.config.js" type="text/javascript"></script>
 <script src="utils/OSRM.browsers.js" type="text/javascript"></script>
@@ -94,6 +95,14 @@ or see http://www.gnu.org/licenses/agpl.txt.
   ga('send', 'pageview');
 
 </script>
+<!-- more cycletour stuff -->
+<!-- Load c3.css -->
+<link href="cycletour/c3.css" rel="stylesheet" type="text/css">
+
+<!-- Load d3.js and c3.js -->
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="cycletour/c3.min.js"></script>
+
 
 </head>
 
@@ -265,6 +274,11 @@ or see http://www.gnu.org/licenses/agpl.txt.
 </div>
 
 </div>
+</div>
+<!-- elevation profile for cycletour.org -->
+<div id="chart-box">
+   <div id="chart">
+   </div>
 </div>
 
 </body>

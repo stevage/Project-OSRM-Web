@@ -118,7 +118,118 @@ showQRCode: function(response){
 		OSRM.G.qrcodewindow.close();	
 	OSRM.G.qrcodewindow = window.open( OSRM.RoutingDescription.QR_DIRECTORY+"qrcodes.html","","width=280,height=250,left=100,top=100,dependent=yes,location=no,menubar=no,scrollbars=no,status=no,toolbar=no,resizable=no");
 },
+getElevation: function() {
+	var doChart = function (eles, distance) {
+	  document.querySelector('#chart-box').style.display='block';
+	  var x = ['x'];
+	  for (i = 0; i < eles.length; i++) {
+	    x.push((i * distance / eles.length).toFixed(2));
+	  }
+	  var minele = Math.min.apply(null, eles);
+	  var maxele = Math.max.apply(null, eles);
+	  var tickoptions = [1, 2, 5,10,20,25,50,100,150,200,250,500,750,1000];
+    var tickamt;
+    var maxticksdesired = 4, nticks = maxticksdesired+1;
+    for (i=0; nticks > 4; i++) {
+      tickamt = tickoptions[i];
+      nticks = (maxele - minele) / tickamt;
+    }
+    var ticks = [];
+    for (i = minele - (minele % tickamt); i < maxele + tickamt; i+= tickamt) {
+    	ticks.push(i);
+    }
 
+    eles.splice(0,0,'Elevations');
+
+	  var chart = c3.generate({
+	  	size: { height: 130 }, // why this number? #chart-box is 100 so this is just guessing...
+	  	axis: { 
+	  		x: { tick: { 
+	  			count: 10,
+	  			format: function(x) { return x.toFixed(1); } } }, // not working?
+	  		y: { 
+	  			min: ticks[0],//minele - (minele % 50), 
+	  			max: ticks.slice[-1] + tickamt,//maxele + 50 - (maxele % 50), 
+	  			padding: { top: 1, bottom: 0 },
+	  			tick: { 
+	  			  values: ticks
+	  			  /*count: 5,
+	  			  format: function(y) { return y.toFixed(0); } } } , */
+	  			}
+	  		}},
+	  	point: { show: false },
+	  	//axis: { x: { show: false } },
+	    bindto: '#chart',
+	    legend: { 'hide': true },
+	    data: {
+	      x: 'x',
+	      columns: [
+	        x,
+	        eles
+	      ]
+	    }
+	  });
+	}
+	var getJSON = function(url, callback) {
+		// for some reason we don't have jQuery. This just copies $.getJSON();
+		var request = new XMLHttpRequest();
+		request.open('GET', url, true);
+
+		request.onload = function() {
+		  if (request.status >= 200 && request.status < 400) {
+		    // Success!
+		    var data = JSON.parse(request.responseText);
+		    callback(data);
+		  } else {
+		    // We reached our target server, but it returned an error
+         throw ("Surface API isn't working.");
+		  }
+		};
+
+		request.onerror = function() {
+         throw ("Surface API isn't working.");
+		};
+
+		request.send();
+  }
+	var positions = OSRM.G.route.getPositions();
+	var samplePoints = 200;
+ 
+  p=[];
+  positions.forEach(function(d) {
+  	p.push( [d.lng.toFixed(6), d.lat.toFixed(6)]);
+  });
+  var lsp = turf.linestring(p);
+  var distance = turf.lineDistance(lsp, "kilometers");
+  var pointString = "";
+  for (i=0; i < samplePoints; i++) {
+  	var rp = turf.along(lsp, i * distance / samplePoints, "kilometers").geometry.coordinates;
+  	pointString += rp + ";"
+    
+  }
+	pointString = pointString.slice(0,-1);
+
+  var pkey = 'pk.eyJ1Ijoic3RldmFnZSIsImEiOiJGcW03aExzIn0.QUkUmTGIO3gGt83HiRIjQw';
+  var surfaceURL = 'https://api.tiles.mapbox.com/v4/surface/mapbox.mapbox-terrain-v1.json?layer=contour&interpolate=true&fields=ele&points=' + pointString + '&access_token=' + pkey ;
+  
+	getJSON(surfaceURL, function(data) {
+  //debugger;
+    var latlngs = [];
+    var eles = [];
+    data.results.forEach(function(d) {
+      //console.log("(" + d.latlng.lng.toFixed(6) + "," + d.latlng.lat.toFixed(6) + ")  " + d.ele);
+      latlngs.push(d.latlng);
+      if (d.ele)
+      	eles.push(d.ele.toFixed(1));
+      else
+      	eles.push(0); // what to do??
+
+    });
+    //L.polyline(latlngs, {color: 'red'} ).addTo(map);
+    doChart(eles, distance);
+
+  });
+},
 // handling of routing description
 show: function(response) {
 	var pr = OSRM.C.PRECISION;
@@ -136,6 +247,7 @@ show: function(response) {
 
 	// create GPX link
 	var gpx_link = '[<a class="text-link" onClick="document.location.href=\'' + OSRM.G.active_routing_server_url + query_string + '&output=gpx\';">'+OSRM.loc("GPX_FILE")+'</a>]';
+	//var elevation_link = '[<a class="text-link" onClick="console.log(\"' +  query_string + '\")">'+'Elevation'+'</a>]';
 	
 	// check highlight marker to get id of corresponding description
 	// [works as changing language or metric does not remove the highlight marker!]	
@@ -144,7 +256,12 @@ show: function(response) {
 		selected_description = OSRM.G.markers.highlight.description;
 		
 	// create route description
-	var positions = OSRM.G.route.getPositions();
+  var positions = OSRM.G.route.getPositions();
+
+	//OSRM.RoutingDescription.getElevation(); //### scrap this later
+  var elevation_link = '[<a class="text-link" onClick="OSRM.RoutingDescription.getElevation();">'+'Elevation'+'</a>]';
+	
+
 	var body = "";
 	body += '<table class="description medium-font">';
 	for(var i=0; i < response.route_instructions.length; i++){
@@ -192,7 +309,7 @@ show: function(response) {
 	route_name += ")";
 	
 	// build header
-	header = OSRM.RoutingDescription._buildHeader(OSRM.Utils.toHumanDistance(response.route_summary.total_distance), OSRM.Utils.toHumanTime(response.route_summary.total_time), route_link, gpx_link, route_name);
+	header = OSRM.RoutingDescription._buildHeader(OSRM.Utils.toHumanDistance(response.route_summary.total_distance), OSRM.Utils.toHumanTime(response.route_summary.total_time), route_link, gpx_link, route_name,elevation_link);
 	
 	// check if route_name causes a line break -> information-box height has to be reduced
 	var tempDiv = document.createElement('tempDiv');
@@ -247,7 +364,7 @@ showNA: function( display_text ) {
 },
 
 // build header
-_buildHeader: function(distance, duration, route_link, gpx_link, route_name) {
+_buildHeader: function(distance, duration, route_link, gpx_link, route_name, elevation_link) {
 	var temp = 
 		'<div class="header-title">' + OSRM.loc("ROUTE_DESCRIPTION") + (route_name ? '<br/><div class="header-subtitle">' + route_name + '</div>' : '') + '</div>' +
 		
@@ -275,7 +392,15 @@ _buildHeader: function(distance, duration, route_link, gpx_link, route_name) {
 		'<div class="row">' +
 		'<div class="right header-content">' + gpx_link + '</div>' +
 		'</div>' +
+
+		'<div class="row">' +
+		'<div class="right header-content">' + elevation_link + '</div>' +
 		'</div>' +
+
+
+		'</div>' +
+
+
 		'</div>' +
 		
 		'</div>' +
@@ -310,3 +435,4 @@ _getDrivingInstruction: function(server_instruction_id) {
 }
 
 };
+///
