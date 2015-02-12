@@ -71,7 +71,7 @@ OSRM.Control.Layers = L.Control.Layers.extend({
 	setLayerLabels: function () {
 		var i, input,
 		inputs = this._form.getElementsByTagName('input'),
-		inputsLen = inputs.length;
+		inputsLen = inputs.length-1; // SB: Seems to be an off-by-one, perhaps caused by leaflet-base-layers property.
 		tileServers = OSRM.DEFAULTS.TILE_SERVERS.length;
 	
 		for (i = 0; i < inputsLen; i++) {

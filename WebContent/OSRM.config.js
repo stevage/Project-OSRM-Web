@@ -29,7 +29,13 @@ OSRM.DEFAULTS = {
             timestamp: 'http://cycletour.org:5011/timestamp',
             metric: 1,
             label: 'Hiking',
+        },
+        {       url: 'http://cycletour.org:5013/viaroute',
+            timestamp: 'http://cycletour.org:5013/timestamp',
+            metric: 1,
+            label: 'Alex',
         }
+
 
 	],
 	
@@ -92,7 +98,7 @@ OSRM.DEFAULTS = {
 		
 	TILE_SERVERS: [
                  {       display_name: 'Cycle Touring', /* with automatic cutover to dynamic tiles */ 
-                        url:'http://cycletour.org/cycletour/{z}/{x}/{y}.png?updated=' + ts,
+                        url:'http://{s}.cycletour.org/cycletour/{z}/{x}/{y}.png?updated=1', // ?updated=' + ts,
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 18, minZoom: 6}
                 },
@@ -106,7 +112,8 @@ OSRM.DEFAULTS = {
                 layers: ['WEB_MERCATOR'],
                 format: 'image/png',
                 transparent: false,
-                continuousWorld: true
+                continuousWorld: true,
+                detectRetina: true
             }
         },
          /*{
@@ -122,16 +129,26 @@ OSRM.DEFAULTS = {
             }
         },*/
                 {       display_name: 'Cycle Touring (mobile)',
-                        url:'http://cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&scale=2&updated=1',
+                        url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&scale=2&updated=11',
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 16, minZoom: 6}
                 },
                  {       display_name: 'Cycle Touring (experimental)',
-                        url:'http://cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&updated=' + ts,
+                        url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&updated=' + ts,
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 16, minZoom: 6}
                 },
-                {       display_name: 'City bike paths',
+                 {       display_name: 'Cycle Touring (HiDPI)',
+                        url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=12&scale=2&updated=3',
+                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
+                        options:{maxZoom: 16, minZoom: 6, detectRetina:true}
+                },
+                 {       display_name: 'Cycle Touring (hiDPI tiny)',
+                        url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&updated=1',
+                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
+                        options:{maxZoom: 16, minZoom: 6, detectRetina:true}
+                },
+                  {       display_name: 'City bike paths',
                         url:'http://cycletour.org/tile/SteveBikeMap/{z}/{x}/{y}.png?updated=1',
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 18}
@@ -141,11 +158,20 @@ OSRM.DEFAULTS = {
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 18}
                 },
-  		{	display_name: 'Sigma',
+                {       display_name: 'OpenCycleMap',
+                        url:'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
+                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, Cartography &copy; Andy Allen',
+                        options:{maxZoom: 18}
+                },
+ 		{	display_name: 'Sigma',
 			url:'http://tiles1.sigma-dc-control.com/layer8/{z}/{x}/{y}.png',
 			attribution:'whatever',
 			options:{maxZoom: 18}
 		},
+                {      display_name: 'Komoot',
+                       url:'http://www.komoot.de/tiles/a/{z}/{x}/{y}.png',
+                       options:{maxZoom: 18}
+                },
                {	display_name: 'Mapbox Terrain',
 			url:'http://{s}.tiles.mapbox.com/v3/dennisl.map-dfbkqsr2/{z}/{x}/{y}.png',
 			attribution:'Data © <a href="http://www.openstreetmap.org/copyright/en">OpenStreetMap</a> contributors (ODbL), Imagery © <a href="http://mapbox.com/">MapBox</a>',
@@ -182,7 +208,10 @@ OSRM.DEFAULTS = {
 			url:'http://4umaps.eu/{z}/{x}/{y}.png',
 			attribution:'Data © <a href="http://www.openstreetmap.org/copyright/en">OpenStreetMap</a> contributors (ODbL), tiles (C) 4UMaps.eu',
 			options:{maxZoom: 16}
-		}
+		},
+                { display_name: 'Terrain only', url:'http://cycletour.org:5500/v2/cycletour-terrain/{z}/{x}/{y}.png',attribution:'DEPI, Steve Bennett',
+                  options: { detectRetina: true } 
+                }
 
 	],
 	
@@ -193,12 +222,12 @@ OSRM.DEFAULTS = {
 			options:{opacity:1.0}
 		},
                 {       display_name: 'Public transport',
-                        url:'http://dev.cycletour.org:20008/tile/buses/{z}/{x}/{y}.png?updated=' + ts,
+                        url:'http://cycletour.org/tile/MelbournePT/{z}/{x}/{y}.png?updated=' + ts,
                         attribution:'Steve Bennett',
                         options:{}
                 },
                 {       display_name: 'Truck volume (VicRoads)',
-                        url:'http://cycletour.org:20008/tile/vicroadstest/{z}/{x}/{y}.png?updated='+1,// + ts,
+                        url:'http://{s}.cycletour.org/tile/vicroadstest/{z}/{x}/{y}.png?metatile=4&updated='+1,// + ts,
                         attribution:'VicRoads',
                         options:{opacity: 0.5}
 		},
@@ -207,10 +236,28 @@ OSRM.DEFAULTS = {
                         attribution:'OpenStreetMap contributors',
                         options:{opacity: 0.9}
                 },
+                {       display_name: 'Vegetation (Vic Gov)',
+                        url:'http://{s}.cycletour.org/tile/vegetation/{z}/{x}/{y}.png?metatile=4&updated='+4,// + ts,
+                        attribution:'Vicmap',
+                        options:{opacity: 0.5}
+                },
                 {       display_name: 'EMS cycletours',
                         url:'http://cycletour.org:20008/tile/SteveEMSOverlay/{z}/{x}/{y}.png?scale=2&updated=' + ts,
                         attribution:'OpenStreetMap contributors',
                         options:{opacity: 1.0}
+                },
+                {       display_name: "Council boundaries",
+                        url:'http://cycletour.org/tile/lga-overlay/{z}/{x}/{y}.png?updated=18',
+                        attribution:'ABS',
+                        options:{opacity:1.0}
+                },
+                {       display_name: "Local bike routes",
+                        url: 'http://cycletour.org:20008/tile/local-bike-routes/{z}/{x}/{y}.png?updated=2',
+                        options:{opacity:0.6 }
+                },
+                {      
+                   display_name: "Cycletour overlay", url: 'http://cycletour.org:20008/tile/cycletour-overlay/{z}/{x}/{y}.png?scale=2&metatile=4',
+                   options: { detectRetina:true }
                 }
  	],
 	NOTIFICATIONS: {
