@@ -139,6 +139,6 @@ click: function(e) {
 },
 geolocationResponse: function(response) {
 	var latlng = new L.LatLng(response.coords.latitude, response.coords.longitude);		
-	OSRM.G.map.setViewUI(latlng, OSRM.DEFAULTS.ZOOM_LEVEL );
+	// SB: OSRM.G.map.setViewUI(latlng, OSRM.DEFAULTS.ZOOM_LEVEL );
 }
 };
