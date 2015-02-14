@@ -166,3 +166,11 @@ path.c3-line-Elevations {
   stroke-antialiasing:true;
 
 }
+
+#maxclimb {
+  position:absolute;
+  top:0;
+  left:55px;
+  color:#444;
+  
+}

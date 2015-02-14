@@ -122,15 +122,51 @@ getElevation: function() {
 	var doChart = function (eles, distance) {
 	  document.querySelector('#chart-box').style.display='block';
 	  var x = ['x'];
+	  var maxclimb=0, maxgradient=0, curclimb=0, climbstart=-1;
 	  for (i = 0; i < eles.length; i++) {
+	  	eles[i] = parseFloat(eles[i]);
 	    x.push((i * distance / eles.length).toFixed(2));
+	    if (i > 0) {
+	    	if (eles[i] >= eles[i-1]) {
+	    		if (climbstart < 0) {
+	    			// climb starts
+	    			climbstart = i;
+	    		}
+	    	}
+	    	if (eles[i] < eles[i-1] && climbstart >= 0 || i == eles.length -1) {
+	    		// look for an excuse to keep counting this climb, to handle noise in the elevations
+	    		var keepgoing=0;
+	    		for (j = i; j < i + 10 && j < eles.length; j++ ) {
+	    			if (eles[j] > eles[i-1])
+	    				keepgoing=1;
+	    		}
+	    		if (!keepgoing || i == eles.length-1) {
+		    		// climb ends
+		    		curclimb = eles[i-1] - eles[climbstart];
+		    		if (curclimb > maxclimb) {
+		    			maxclimb = curclimb;
+		    			console.log(maxclimb);
+		    			// ## warning, this gradient calculation will be inaccurate (overestimate) for long routes.
+		    			// 10 because of kilometre/metre mismatch.
+		    			maxgradient = 10.0 * (eles[i-1] - eles[climbstart]) / (parseFloat(x[i-1]) - parseFloat(x[climbstart]));
+		    		}
+		    		climbstart = -1;
+		    	}
+	    	}
+	  	}
 	  }
+
+    var maxclimbtext = "Biggest climb: " + maxclimb.toFixed(0) + "m";
+    maxclimbtext += " @ " + (maxgradient/100).toFixed(1) + "%";
+    document.querySelector('#maxclimb').innerHTML = maxclimbtext;
+
+    /* Generate a nice set of y axis ticks. */
 	  var minele = Math.min.apply(null, eles);
 	  var maxele = Math.max.apply(null, eles);
 	  var tickoptions = [1, 2, 5,10,20,25,50,100,150,200,250,500,750,1000];
     var tickamt;
-    var maxticksdesired = 4, nticks = maxticksdesired+1;
-    for (i=0; nticks > 4; i++) {
+    var maxticks = 5, nticks = maxticks+1;
+    for (i=0; nticks > maxticks; i++) {
       tickamt = tickoptions[i];
       nticks = (maxele - minele) / tickamt;
     }
