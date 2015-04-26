@@ -25,8 +25,8 @@ OSRM.DEFAULTS = {
             metric: 0,
             label: 'Cycling',
         },
-        {   url: 'http://osrm.cycletour.org:5010/viaroute',
-            timestamp: 'http://cycletour.org:5010/timestamp',
+        {   url: 'http://osrm.cycletour.org/osrm-routing/5010/viaroute',
+            timestamp: 'http://cycletour.org/osrm-routing/5010/timestamp',
             metric: 0,
             label: 'new-server',
         },
@@ -103,9 +103,14 @@ OSRM.DEFAULTS = {
 		
 	TILE_SERVERS: [
                  {       display_name: 'Cycle Touring', /* with automatic cutover to dynamic tiles */ 
-                        url:'http://{s}.cycletour.org/cycletour/{z}/{x}/{y}.png?updated=1', // ?updated=' + ts,
+                        url:'http://{s}.cycletour.org/cycletour/{z}/{x}/{y}.png?updated=2', // ?updated=' + ts,
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 18, minZoom: 6}
+                },
+                 {       display_name: 'Cycle Touring (HiDPI/Retina/mobile)', /* with automatic cutover to dynamic tiles */
+                        url:'http://{s}.cycletour.org/cycletour-2x/{z}/{x}/{y}.png?metatile=4', // ?updated=' + ts,
+                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
+                        options:{maxZoom: 18, minZoom: 6, detectRetina: true}
                 },
        
          {       
@@ -118,7 +123,7 @@ OSRM.DEFAULTS = {
                 format: 'image/png',
                 transparent: false,
                 continuousWorld: true,
-                detectRetina: true
+                detectRetina: false//true
             }
         },
          /*{
@@ -133,23 +138,13 @@ OSRM.DEFAULTS = {
                 continuousWorld: true
             }
         },*/
-                {       display_name: 'Cycle Touring (mobile)',
-                        url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&scale=2&updated=11',
-                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
-                        options:{maxZoom: 16, minZoom: 6}
-                },
                  {       display_name: 'Cycle Touring (experimental)',
                         url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&updated=' + ts,
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 16, minZoom: 6}
                 },
-                 {       display_name: 'Cycle Touring (HiDPI)',
-                        url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=12&scale=2&updated=3',
-                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
-                        options:{maxZoom: 16, minZoom: 6, detectRetina:true}
-                },
-                 {       display_name: 'Cycle Touring (hiDPI tiny)',
-                        url:'http://{s}.cycletour.org/tile/cycletour/{z}/{x}/{y}.png?metatile=4&updated=1',
+                 {       display_name: 'Cycle Touring (hiDPI tiny)', /* Serves up normal cached tiles, at twice the DPI */
+                        url:'http://{s}.cycletour.org/cycletour/{z}/{x}/{y}.png',
                         attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 16, minZoom: 6, detectRetina:true}
                 },
@@ -216,6 +211,11 @@ OSRM.DEFAULTS = {
 		},
                 { display_name: 'Terrain only', url:'http://cycletour.org:5500/v2/cycletour-terrain/{z}/{x}/{y}.png',attribution:'DEPI, Steve Bennett',
                   options: { detectRetina: true } 
+                },
+                { display_name: 'Six (NSW)',
+                  url:'http://maps3.six.nsw.gov.au/arcgis/rest/services/sixmaps/LPIMap/MapServer/tile/{z}/{y}/{x}',
+                  attribution: 'NSW Government',
+                  options: {maxZoom: 18}
                 }
 
 	],
@@ -263,6 +263,11 @@ OSRM.DEFAULTS = {
                 {      
                    display_name: "Cycletour overlay", url: 'http://cycletour.org:20008/tile/cycletour-overlay/{z}/{x}/{y}.png?scale=2&metatile=4',
                    options: { detectRetina:true }
+                },
+                {
+                   display_name: "Water bodies (BOM AHGF)", url: 'http://guru.cycletour.org/tile/waterbodies-overlay/{z}/{x}/{y}.png?metatile=4',
+                   
+                   options: { opacity:0.6, detectRetina:true }
                 }
  	],
 	NOTIFICATIONS: {

@@ -70,11 +70,11 @@ OSRM.Localization["en"] = {
 "NO_RESULTS_FOUND_TARGET": "No results found for end",
 // routing
 "ROUTE_DESCRIPTION": "Route Description",
-"GET_LINK_TO_ROUTE": "Generate Link",
+"GET_LINK_TO_ROUTE": "Link",
 "ROUTE_LINK": "Route Link",
 "GENERATE_LINK_TO_ROUTE": "waiting for link",
 "LINK_TO_ROUTE_TIMEOUT": "not available",
-"GPX_FILE": "GPX File",
+"GPX_FILE": "GPX",
 "DISTANCE": "Distance",
 "DURATION": "Duration",
 "YOUR_ROUTE_IS_BEING_COMPUTED": "Your route is being computed",
