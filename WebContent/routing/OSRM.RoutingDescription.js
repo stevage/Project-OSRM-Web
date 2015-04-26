@@ -120,41 +120,42 @@ showQRCode: function(response){
 },
 getElevation: function() {
 	var doChart = function (eles, distance) {
-	  document.querySelector('#chart-box').style.display='block';
-	  var x = ['x'];
-	  var maxclimb=0, maxgradient=0, curclimb=0, climbstart=-1;
-	  for (i = 0; i < eles.length; i++) {
-	  	eles[i] = parseFloat(eles[i]);
-	    x.push((i * distance / eles.length).toFixed(2));
-	    if (i > 0) {
-	    	if (eles[i] >= eles[i-1]) {
-	    		if (climbstart < 0) {
-	    			// climb starts
-	    			climbstart = i;
-	    		}
-	    	}
-	    	if (eles[i] < eles[i-1] && climbstart >= 0 || i == eles.length -1) {
-	    		// look for an excuse to keep counting this climb, to handle noise in the elevations
-	    		var keepgoing=0;
-	    		for (j = i; j < i + 10 && j < eles.length; j++ ) {
-	    			if (eles[j] > eles[i-1])
-	    				keepgoing=1;
-	    		}
-	    		if (!keepgoing || i == eles.length-1) {
-		    		// climb ends
-		    		curclimb = eles[i-1] - eles[climbstart];
-		    		if (curclimb > maxclimb) {
-		    			maxclimb = curclimb;
-		    			console.log(maxclimb);
-		    			// ## warning, this gradient calculation will be inaccurate (overestimate) for long routes.
-		    			// 10 because of kilometre/metre mismatch.
-		    			maxgradient = 10.0 * (eles[i-1] - eles[climbstart]) / (parseFloat(x[i-1]) - parseFloat(x[climbstart]));
-		    		}
-		    		climbstart = -1;
-		    	}
-	    	}
-	  	}
-	  }
+        document.querySelector('#chart-box').style.display='block';
+        var x = ['x'];
+        var maxclimb=0, maxgradient=0, curclimb=0, climbstart=-1;
+
+
+    	for (i = 0; i < eles.length; i++) {
+    	    x.push((i * distance / eles.length).toFixed(2));
+    	    if (i > 0) {
+    	    	if (eles[i] >= eles[i-1]) {
+    	    		if (climbstart < 0) {
+    	    			// climb starts
+    	    			climbstart = i;
+    	    		}
+    	    	}
+    	    	if (eles[i] < eles[i-1] && climbstart >= 0 || i == eles.length -1) {
+    	    		// look for an excuse to keep counting this climb, to handle noise in the elevations
+    	    		var keepgoing=0;
+    	    		for (j = i; j < i + 10 && j < eles.length; j++ ) {
+    	    			if (eles[j] > eles[i-1])
+    	    				keepgoing=1;
+    	    		}
+    	    		if (!keepgoing || i == eles.length-1) {
+    		    		// climb ends
+    		    		curclimb = eles[i-1] - eles[climbstart];
+    		    		if (curclimb > maxclimb) {
+    		    			maxclimb = curclimb;
+    		    			console.log(maxclimb);
+    		    			// ## warning, this gradient calculation will be inaccurate (overestimate) for long routes.
+    		    			// 10 because of kilometre/metre mismatch.
+    		    			maxgradient = 10.0 * (eles[i-1] - eles[climbstart]) / (parseFloat(x[i-1]) - parseFloat(x[climbstart]));
+    		    		}
+    		    		climbstart = -1;
+    		    	}
+    	    	}
+    	  	}
+    	}
 
     var maxclimbtext = "Biggest climb: " + maxclimb.toFixed(0) + "m";
     maxclimbtext += " @ " + (maxgradient/100).toFixed(1) + "%";
@@ -249,19 +250,25 @@ getElevation: function() {
   var surfaceURL = 'https://api.tiles.mapbox.com/v4/surface/mapbox.mapbox-terrain-v1.json?layer=contour&interpolate=true&fields=ele&points=' + pointString + '&access_token=' + pkey ;
   
 	getJSON(surfaceURL, function(data) {
-  //debugger;
     var latlngs = [];
     var eles = [];
+    var firstele = null, lastele = null;
+
     data.results.forEach(function(d) {
-      //console.log("(" + d.latlng.lng.toFixed(6) + "," + d.latlng.lat.toFixed(6) + ")  " + d.ele);
       latlngs.push(d.latlng);
-      if (d.ele)
-      	eles.push(d.ele.toFixed(1));
-      else
-      	eles.push(0); // what to do??
+      if (d.ele) {
+        lastele = d.ele.toFixed(1);        
+        eles.push(lastele);
+        (firstele === null) && (firstele = lastele);
+      } else {
+        eles.push(lastele); // set to most nearest known value predecessor, if we have one
+      }
 
     });
-    //L.polyline(latlngs, {color: 'red'} ).addTo(map);
+    /* Handle nulls before the first known value. */
+    for (i = 0; i < eles.length && eles[i] === null; i++)
+        eles[i] = firstele;
+
     doChart(eles, distance);
 
   });
