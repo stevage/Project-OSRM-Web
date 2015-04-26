@@ -73,10 +73,10 @@ setLanguage: function(language, loaded_on_demand) {
 	if( loaded_on_demand ) {
 		// fix for racing condition when fallback language gets loaded after current language
 		var fb_localization = OSRM.Localization[OSRM.Localization.fallback_language];
-		if( fb_localization == null || fb_localization.loading != null )	// fallback language still loading
+		if( fb_localization == null || fb_localization.loading )	// fallback language still loading
 			return;
 		var od_localization = OSRM.Localization[OSRM.Localization.load_on_demand_language];
-		if( od_localization != null && od_localization.loading == null )	// on demand language has loaded
+		if( od_localization != null && od_localization.loading )	// on demand language has loaded
 			language = OSRM.Localization.load_on_demand_language;
 		
 		if( language != OSRM.Localization.load_on_demand_language )
@@ -136,15 +136,12 @@ setLanguage: function(language, loaded_on_demand) {
 },
 		
 // if existing, return localized string -> English string -> input string
-// [if fallback given and localized, English strings not existent, localize and return fallback string]
-translate: function(text, fallback) {
+translate: function(text) {
 	if( OSRM.Localization[OSRM.Localization.current_language] && OSRM.Localization[OSRM.Localization.current_language][text] )
 		return OSRM.Localization[OSRM.Localization.current_language][text];
 	else if( OSRM.Localization[OSRM.Localization.fallback_language] && OSRM.Localization[OSRM.Localization.fallback_language][text] )
 		return OSRM.Localization[OSRM.Localization.fallback_language][text];
-	else if( fallback )
-		return OSRM.loc( fallback );
-	else	
+	else
 		return text;
 }
 };

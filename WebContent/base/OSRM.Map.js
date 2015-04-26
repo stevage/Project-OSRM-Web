@@ -38,11 +38,12 @@ init: function() {
 	var base_maps = {};
 	for(var i=0, size=tile_servers.length; i<size; i++) {
 		tile_servers[i].options.attribution = tile_servers[i].attribution;
-		if ('wms' in tile_servers[i] && tile_servers[i].wms) {
-		    base_maps[ tile_servers[i].display_name ] = new L.tileLayer.wms( tile_servers[i].url, tile_servers[i].options );
-		} else {
-		    base_maps[ tile_servers[i].display_name ] = new L.TileLayer( tile_servers[i].url, tile_servers[i].options );
-		}
+        if ('wms' in tile_servers[i] && tile_servers[i].wms) {
+            base_maps[ tile_servers[i].display_name ] = new L.TileLayer.WMS( tile_servers[i].url, tile_servers[i].options );
+        } else {
+            base_maps[ tile_servers[i].display_name ] = new L.TileLayer( tile_servers[i].url, tile_servers[i].options );
+        }
+		
 		L.Util.stamp( base_maps[ tile_servers[i].display_name ] );			// stamp tile servers so that their order is correct in layers control
 	}
 	
@@ -53,7 +54,24 @@ init: function() {
 		overlay_servers[i].options.attribution = overlay_servers[i].attribution;
 		overlay_maps[ overlay_servers[i].display_name ] = new L.TileLayer( overlay_servers[i].url, overlay_servers[i].options );
 		L.Util.stamp( overlay_maps[ overlay_servers[i].display_name ] );			// stamp tile servers so that their order is correct in layers control
-	}	
+	}
+	
+	var pois = new XMLHttpRequest();
+    pois.open("GET","http://cycletour.org/map.geojson",true);
+     
+    pois.onreadystatechange = function() {
+      if (pois.readyState == 4 && pois.status == 200) {
+          geojson = JSON.parse(pois.responseText); 
+          glayer = L.geoJson(geojson, { 
+            onEachFeature: function (feature, layer) { 
+              layer.bindPopup(feature.properties.description); 
+              } 
+            });
+          overlay_maps["Tour wisdom"] = glayer;
+          OSRM.G.map.layerControl.addOverlay(glayer, "Tour wisdom"); // potential race condition here.
+        }
+    }
+    pois.send(null);
 
 	// setup map
 	OSRM.G.map = new OSRM.Control.Map('map', {
@@ -143,6 +161,6 @@ click: function(e) {
 },
 geolocationResponse: function(response) {
 	var latlng = new L.LatLng(response.coords.latitude, response.coords.longitude);		
-	// SB: OSRM.G.map.setViewUI(latlng, OSRM.DEFAULTS.ZOOM_LEVEL );
+	//OSRM.G.map.setViewUI(latlng, OSRM.DEFAULTS.ZOOM_LEVEL );
 }
 };

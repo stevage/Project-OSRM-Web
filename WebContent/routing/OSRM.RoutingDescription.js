@@ -55,12 +55,13 @@ onClickRouteDescription: function(lat, lng, desc) {
 },
 onClickCreateShortcut: function(src){
 	var pr = OSRM.C.PRECISION;
-	src += '&z='+ OSRM.G.map.getZoom() + '&center=' + OSRM.G.map.getCenter().lat.toFixed(pr) + ',' + OSRM.G.map.getCenter().lng.toFixed(pr);
+    	src += '&z='+ OSRM.G.map.getZoom() + '&center=' + OSRM.G.map.getCenter().lat.toFixed(pr) + ',' + OSRM.G.map.getCenter().lng.toFixed(pr);
 	src += '&alt='+OSRM.G.active_alternative;
 	src += '&df=' + OSRM.G.active_distance_format;
 	src += '&re=' + OSRM.G.active_routing_engine;
 	src += '&ly=' + OSRM.Utils.getHash( OSRM.G.map.layerControl.getActiveLayerName() );
-	
+	//console.log("Here you go, Alex: " + src);
+        i//if (justsrc) { return src; }
 	// uncomment to not use link shorteners
 	if( OSRM.DEFAULTS.HOST_SHORTENER_URL == '' ) {
 		var response = {};
@@ -87,11 +88,13 @@ showRouteLink: function(response){
 	if( !shortlink_label )
 		shortlink_label = OSRM.G.active_shortlink.substring(7);
 	document.getElementById('route-link').innerHTML =
-	/*	'[<a class="text-link" onClick="OSRM.RoutingDescription.showQRCode();">'+OSRM.loc("QR")+'</a>]' + '&nbsp;' +
-		'[<a class="text-link" href="' +OSRM.G.active_shortlink+ '">'+shortlink_label+'</a>]';*/
-      '&nbsp;&nbsp;' + shortlink_label + '&nbsp;' 
-    + '&nbsp;' + '<a class="text-link" href="' + 'http://' + shortlink_label + '">' + '[-]' + '</a>';
-	
+		//'[<a class="text-link" onClick="OSRM.RoutingDescription.showQRCode();">'+OSRM.loc("QR")+'</a>]' + '&nbsp;' +
+		/*'[<a class="text-link" href="' +OSRM.G.active_shortlink+ '">'+*/
+       
+                '&nbsp;&nbsp;' + shortlink_label + '&nbsp;' 
+                + '&nbsp;' + '<a class="text-link" href="' + 'http://' + shortlink_label + '">' + '[-]' + '</a>';
+                //'<img src="http://www.endlessicons.com/wp-content/uploads/2012/11/link-icon-614x460.png" style="width:8px; height: 8px;" /> </a>'; 
+                /*+'</a>]'*/;
 },
 showRouteLink_TimeOut: function(){
   // bleh, repeated code - SB
@@ -108,7 +111,7 @@ showRouteLink_TimeOut: function(){
         src += '&re=' + OSRM.G.active_routing_engine;
         src += '&ly=' + OSRM.Utils.getHash( OSRM.G.map.layerControl.getActiveLayerName() );
   
-	document.getElementById('route-link').innerHTML = '[<a class="text-link-inactive">'+OSRM.loc("LINK_TO_ROUTE_TIMEOUT")+'</a>]';
+	document.getElementById('route-link').innerHTML = '[<a class="text-link-inactive" href="' + src+'">'+OSRM.loc("LINK_TO_ROUTE_TIMEOUT")+'</a>]';
 },
 showQRCode: function(response){
 	if( OSRM.G.qrcodewindow )
@@ -117,41 +120,42 @@ showQRCode: function(response){
 },
 getElevation: function() {
 	var doChart = function (eles, distance) {
-	  document.querySelector('#chart-box').style.display='block';
-	  var x = ['x'];
-	  var maxclimb=0, maxgradient=0, curclimb=0, climbstart=-1;
-	  for (i = 0; i < eles.length; i++) {
-	  	eles[i] = parseFloat(eles[i]);
-	    x.push((i * distance / eles.length).toFixed(2));
-	    if (i > 0) {
-	    	if (eles[i] >= eles[i-1]) {
-	    		if (climbstart < 0) {
-	    			// climb starts
-	    			climbstart = i;
-	    		}
-	    	}
-	    	if (eles[i] < eles[i-1] && climbstart >= 0 || i == eles.length -1) {
-	    		// look for an excuse to keep counting this climb, to handle noise in the elevations
-	    		var keepgoing=0;
-	    		for (j = i; j < i + 10 && j < eles.length; j++ ) {
-	    			if (eles[j] > eles[i-1])
-	    				keepgoing=1;
-	    		}
-	    		if (!keepgoing || i == eles.length-1) {
-		    		// climb ends
-		    		curclimb = eles[i-1] - eles[climbstart];
-		    		if (curclimb > maxclimb) {
-		    			maxclimb = curclimb;
-		    			console.log(maxclimb);
-		    			// ## warning, this gradient calculation will be inaccurate (overestimate) for long routes.
-		    			// 10 because of kilometre/metre mismatch.
-		    			maxgradient = 10.0 * (eles[i-1] - eles[climbstart]) / (parseFloat(x[i-1]) - parseFloat(x[climbstart]));
-		    		}
-		    		climbstart = -1;
-		    	}
-	    	}
-	  	}
-	  }
+        document.querySelector('#chart-box').style.display='block';
+        var x = ['x'];
+        var maxclimb=0, maxgradient=0, curclimb=0, climbstart=-1;
+
+
+    	for (i = 0; i < eles.length; i++) {
+    	    x.push((i * distance / eles.length).toFixed(2));
+    	    if (i > 0) {
+    	    	if (eles[i] >= eles[i-1]) {
+    	    		if (climbstart < 0) {
+    	    			// climb starts
+    	    			climbstart = i;
+    	    		}
+    	    	}
+    	    	if (eles[i] < eles[i-1] && climbstart >= 0 || i == eles.length -1) {
+    	    		// look for an excuse to keep counting this climb, to handle noise in the elevations
+    	    		var keepgoing=0;
+    	    		for (j = i; j < i + 10 && j < eles.length; j++ ) {
+    	    			if (eles[j] > eles[i-1])
+    	    				keepgoing=1;
+    	    		}
+    	    		if (!keepgoing || i == eles.length-1) {
+    		    		// climb ends
+    		    		curclimb = eles[i-1] - eles[climbstart];
+    		    		if (curclimb > maxclimb) {
+    		    			maxclimb = curclimb;
+    		    			console.log(maxclimb);
+    		    			// ## warning, this gradient calculation will be inaccurate (overestimate) for long routes.
+    		    			// 10 because of kilometre/metre mismatch.
+    		    			maxgradient = 10.0 * (eles[i-1] - eles[climbstart]) / (parseFloat(x[i-1]) - parseFloat(x[climbstart]));
+    		    		}
+    		    		climbstart = -1;
+    		    	}
+    	    	}
+    	  	}
+    	}
 
     var maxclimbtext = "Biggest climb: " + maxclimb.toFixed(0) + "m";
     maxclimbtext += " @ " + (maxgradient/100).toFixed(1) + "%";
@@ -246,19 +250,25 @@ getElevation: function() {
   var surfaceURL = 'https://api.tiles.mapbox.com/v4/surface/mapbox.mapbox-terrain-v1.json?layer=contour&interpolate=true&fields=ele&points=' + pointString + '&access_token=' + pkey ;
   
 	getJSON(surfaceURL, function(data) {
-  //debugger;
     var latlngs = [];
     var eles = [];
+    var firstele = null, lastele = null;
+
     data.results.forEach(function(d) {
-      //console.log("(" + d.latlng.lng.toFixed(6) + "," + d.latlng.lat.toFixed(6) + ")  " + d.ele);
       latlngs.push(d.latlng);
-      if (d.ele)
-      	eles.push(d.ele.toFixed(1));
-      else
-      	eles.push(0); // what to do??
+      if (d.ele) {
+        lastele = d.ele.toFixed(1);        
+        eles.push(lastele);
+        (firstele === null) && (firstele = lastele);
+      } else {
+        eles.push(lastele); // set to most nearest known value predecessor, if we have one
+      }
 
     });
-    //L.polyline(latlngs, {color: 'red'} ).addTo(map);
+    /* Handle nulls before the first known value. */
+    for (i = 0; i < eles.length && eles[i] === null; i++)
+        eles[i] = firstele;
+
     doChart(eles, distance);
 
   });
@@ -280,9 +290,7 @@ show: function(response) {
 
 	// create GPX link
 	var gpx_link = '[<a class="text-link" onClick="document.location.href=\'' + OSRM.G.active_routing_server_url + query_string + '&output=gpx\';">'+OSRM.loc("GPX_FILE")+'</a>]';
-
-	var elevation_link = '[<a class="text-link" onClick="OSRM.RoutingDescription.getElevation();">Elevation</a>]';
-
+	//var elevation_link = '[<a class="text-link" onClick="console.log(\"' +  query_string + '\")">'+'Elevation'+'</a>]';
 	
 	// check highlight marker to get id of corresponding description
 	// [works as changing language or metric does not remove the highlight marker!]	
@@ -291,7 +299,11 @@ show: function(response) {
 		selected_description = OSRM.G.markers.highlight.description;
 		
 	// create route description
-	var positions = OSRM.G.route.getPositions();
+  var positions = OSRM.G.route.getPositions();
+
+	//OSRM.RoutingDescription.getElevation(); //### scrap this later
+  var elevation_link = '[<a class="text-link" onClick="OSRM.RoutingDescription.getElevation();">'+'Elevation'+'</a>]';
+	
 
 	var body = "";
 	body += '<table class="description medium-font">';
@@ -315,7 +327,7 @@ show: function(response) {
 
 		// build route description
 		if( response.route_instructions[i][1] != "" )
-			body += OSRM.loc(OSRM.RoutingDescription._getDrivingInstruction(response.route_instructions[i][0])).replace(/\[(.*)\]/,"$1").replace(/%s/, OSRM.RoutingDescription._getStreetName(response.route_instructions[i][1]) ).replace(/%d/, OSRM.loc(response.route_instructions[i][6]));
+			body += OSRM.loc(OSRM.RoutingDescription._getDrivingInstruction(response.route_instructions[i][0])).replace(/\[(.*)\]/,"$1").replace(/%s/, response.route_instructions[i][1]).replace(/%d/, OSRM.loc(response.route_instructions[i][6]));
 		else
 			body += OSRM.loc(OSRM.RoutingDescription._getDrivingInstruction(response.route_instructions[i][0])).replace(/\[(.*)\]/,"").replace(/%d/, OSRM.loc(response.route_instructions[i][6]));
 
@@ -334,13 +346,13 @@ show: function(response) {
 	// create route name
 	var route_name = "(";
 	for(var j=0, sizej=response.route_name.length; j<sizej; j++)
-		route_name += ( j>0 && response.route_name[j] != "" && response.route_name[j-1] != "" ? " - " : "") + "<span style='white-space:nowrap;'>" + OSRM.RoutingDescription._getStreetName(response.route_name[j]) + "</span>";
+		route_name += ( j>0 && response.route_name[j] != "" && response.route_name[j-1] != "" ? " - " : "") + "<span style='white-space:nowrap;'>"+response.route_name[j]+ "</span>";
 	if( route_name == "(" )
 		route_name += " - ";
 	route_name += ")";
 	
 	// build header
-	header = OSRM.RoutingDescription._buildHeader(OSRM.Utils.toHumanDistance(response.route_summary.total_distance), OSRM.Utils.toHumanTime(response.route_summary.total_time), route_link, gpx_link, route_name, elevation_link);
+	header = OSRM.RoutingDescription._buildHeader(OSRM.Utils.toHumanDistance(response.route_summary.total_distance), OSRM.Utils.toHumanTime(response.route_summary.total_time), route_link, gpx_link, route_name,elevation_link);
 	
 	// check if route_name causes a line break -> information-box height has to be reduced
 	var tempDiv = document.createElement('tempDiv');
@@ -430,6 +442,8 @@ _buildHeader: function(distance, duration, route_link, gpx_link, route_name, ele
 
 
 		'</div>' +
+
+
 		'</div>' +
 		
 		'</div>' +
@@ -461,16 +475,7 @@ _getDrivingInstruction: function(server_instruction_id) {
 	if( description == local_instruction_id)
 		return OSRM.loc("DIRECTION_0");
 	return description;
-},
-
-// retrieve street name
-_getStreetName: function(street) {
-	var name = street.match(/\{highway:(.*)\}/);
-	if( name )
-		name = OSRM.loc('HIGHWAY_'+name[1].toUpperCase(), 'HIGHWAY_DEFAULT');
-	else
-		name = street;
-	return name;
 }
 
 };
+///

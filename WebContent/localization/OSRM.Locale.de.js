@@ -47,11 +47,9 @@ OSRM.Localization["de"] = {
 "GUI_HIGHLIGHT_UNNAMED_ROADS": "Unbenannte Straßen hervorheben",
 "GUI_SHOW_PREVIOUS_ROUTES": "Frühere Routen zeigen",
 "GUI_EXTERNAL_TOOLS": "Externe Programme:",
-"OPEN_EDITOR": "Editor",
-"OPEN_JOSM": "JOSM",
+"OPEN_JOSM": "Editor",
 "OPEN_OSMBUGS": "Notes",
-"OPEN_EDITOR_FAILED": "Zoomen Sie näher heran, um den Editor zu öffnen.",
-"OPEN_JOSM_FAILED": "Zoomen Sie näher heran, um JOSM zu öffnen.",
+"OPEN_JOSM_FAILED": "Zoomen Sie näher heran, um den Editor zu öffnen.",
 "OPEN_OSMBUGS_FAILED": "Zoomen Sie näher heran, um Notes zu setzen.",
 // geocoder
 "SEARCH_RESULTS": "Suchergebnisse",
@@ -76,7 +74,6 @@ OSRM.Localization["de"] = {
 "NO_ROUTE_SELECTED": "Keine Route ausgewählt",
 // routing engines
 "ENGINE_0": "Auto (schnellste)",
-"ENGINE_1": "Fahrrad (schnellste)",
 // tile server names
 // (only required if names are different to OSRM.config)
 //"TILE_SERVER_0": "osm.org",
@@ -121,32 +118,7 @@ OSRM.Localization["de"] = {
 "DIRECTION_11-8":"In den Kreisverkehr einfahren und bei achter Möglichkeit[ in Richtung <b>%s</b>] verlassen",
 "DIRECTION_11-9":"In den Kreisverkehr einfahren und bei neunter Möglichkeit[ in Richtung <b>%s</b>] verlassen",
 "DIRECTION_11-x":"In den Kreisverkehr einfahren und bei einer der vielen Möglichkeiten[ in Richtung <b>%s</b>] verlassen",
-"DIRECTION_15":"Sie haben Ihr Ziel erreicht",
-// street types
-"HIGHWAY_DEFAULT": "Straße",
-"HIGHWAY_PATH": "Pfad",
-"HIGHWAY_FOOTWAY": "Fußweg",
-"HIGHWAY_CYCLEWAY": "Radweg",
-"HIGHWAY_BRIDLEWAY": "Reitweg",
-"HIGHWAY_STEPS": "Stufen",
-"HIGHWAY_MOTORWAY": "Autobahn",
-"HIGHWAY_MOTORWAY_LINK": "Autobahn",
-"HIGHWAY_TRUNK": "Straße",
-"HIGHWAY_TRUNK_LINK": "Straße",
-"HIGHWAY_PRIMARY": "Straße",
-"HIGHWAY_PRIMARY_LINK": "Straße",
-"HIGHWAY_SECONDARY": "Straße",
-"HIGHWAY_SECONDARY_LINK": "Straße",
-"HIGHWAY_TERTIARY": "Straße",
-"HIGHWAY_TERTIARY_LINK": "Straße",
-"HIGHWAY_LIVING_STREET": "Spielstraße",
-"HIGHWAY_PEDESTRIAN": "Fußgängerweg",
-"HIGHWAY_RESIDENTAL": "Straße",
-"HIGHWAY_unclassified": "Straße",
-"HIGHWAY_service": "Straße",
-"HIGHWAY_track": "Pfad",
-"HIGHWAY_raceway": "Rennstrecke",
-"HIGHWAY_road": "Straße"
+"DIRECTION_15":"Sie haben Ihr Ziel erreicht"
 };
 
 // set GUI language on load
