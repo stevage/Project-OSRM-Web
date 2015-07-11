@@ -37,7 +37,7 @@ init: function() {
 	
 	document.getElementById("gui-reset").onclick = OSRM.GUI.resetRouting;
 	document.getElementById("gui-reverse").onclick = OSRM.GUI.reverseRouting;
-	document.getElementById("open-josm").onclick = OSRM.GUI.openJOSM;
+	document.getElementById("open-editor").onclick = OSRM.GUI.openJOSM;
 	document.getElementById("open-osmbugs").onclick = OSRM.GUI.openOSMBugs;
 	document.getElementById("option-highlight-nonames").onclick = OSRM.GUI.hightlightNonames;
 	document.getElementById("option-show-previous-routes").onclick = OSRM.GUI.showPreviousRoutes;
@@ -111,8 +111,8 @@ inputChanged: function(marker_id) {
 		OSRM.Geocoder.call(OSRM.C.TARGET_LABEL, document.getElementById('gui-input-target').value);
 },
 
-// click: button "open JOSM"
-openJOSM: function() {
+// click: button "open Editor"
+openEditor: function() {
 	var zoom = OSRM.G.map.getZoom();
 	if( zoom < OSRM.DEFAULTS.EDITOR_MIN_ZOOM_LEVEL )
 		//window.alert( OSRM.loc("OPEN_JOSM_FAILED") );
