@@ -104,12 +104,12 @@ OSRM.DEFAULTS = {
 	TILE_SERVERS: [
                  {       display_name: 'Cycle Touring', /* with automatic cutover to dynamic tiles */ 
                         url:'http://{s}.cycletour.org/cycletour/{z}/{x}/{y}.png?updated=2', // ?updated=' + ts,
-                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
+                        attribution:'Map data &copy; 2013 Open Street Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 18, minZoom: 6}
                 },
                  {       display_name: 'Cycle Touring (HiDPI/Retina/mobile)', /* with automatic cutover to dynamic tiles */
                         url:'http://{s}.cycletour.org/cycletour-2x/{z}/{x}/{y}.png?metatile=4', // ?updated=' + ts,
-                        attribution:'Map data &copy; 2013 Open Cycle Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
+                        attribution:'Map data &copy; 2013 Open Street Map contributors, terrain from Victorian Government, Cartography &copy; Steve Bennett',
                         options:{maxZoom: 18, minZoom: 6, detectRetina: true}
                 },
        
@@ -126,6 +126,11 @@ OSRM.DEFAULTS = {
                 detectRetina: false//true
             }
         },
+                {       display_name: 'VicMap/Cycletour style (very experimental)',
+                        url:'http://{s}.cycletour.org/tile/cycletour-vicmap/{z}/{x}/{y}.png?metatile=4&updated='+ts,
+                        attribution:'Map data &copy; 2013 Open Street Map contributors, VicMap, Cartography &copy; Steve Bennett',
+                        options:{maxZoom: 16, minZoom: 6}
+                },
          /*{
             display_name: 'VicMap hybrid satellite',
             url:'http://api.maps.vic.gov.au/geowebcacheWM/service/wms?VERSION=1.1.1&TILED=true',
@@ -246,6 +251,16 @@ OSRM.DEFAULTS = {
                         attribution:'Vicmap',
                         options:{opacity: 0.5}
                 },
+               {       display_name: 'Watercourses (VicMap)',
+                        url:'http://guru.cycletour.org/tile/vicmap-watercourse/{z}/{x}/{y}.png?metatile=4&updated='+5,// + ts,
+                        attribution:'Vicmap',
+                        options:{opacity: 0.6}
+                },
+                {       display_name: 'Summits (VicMap)',
+                        url:'http://guru.cycletour.org/tile/morphology/{z}/{x}/{y}.png?metatile=4&updated='+6,// + ts,
+                        attribution:'Vicmap',
+                        options:{opacity: 1.0}
+                },
                 {       display_name: 'EMS cycletours',
                         url:'http://cycletour.org:20008/tile/SteveEMSOverlay/{z}/{x}/{y}.png?scale=2&updated=' + ts,
                         attribution:'OpenStreetMap contributors',
@@ -260,7 +275,20 @@ OSRM.DEFAULTS = {
                         url: 'http://cycletour.org:20008/tile/local-bike-routes/{z}/{x}/{y}.png?updated=2',
                         options:{opacity:0.6 }
                 },
-                {      
+                {       display_name: "Trails in Vic. state forests (DELWP)",
+                        url: 'http://guru.cycletour.org/tile/RecreationTrails/{z}/{x}/{y}.png?updated=1',
+                        attribution:'DELWP',
+                        options:{}
+                },
+                {       display_name: "Campsites in Vic. state forests (DELWP)",
+                        url: 'http://guru.cycletour.org/tile/Recreation-sites/{z}/{x}/{y}.png?metatile=4&updated=10'+
+                        (L.Browser.retina ? '&scale=2': ''),
+                        attribution:'DELWP',
+                        options:{detectRetina:true}
+                },
+
+
+{                      
                    display_name: "Cycletour overlay", url: 'http://cycletour.org:20008/tile/cycletour-overlay/{z}/{x}/{y}.png?scale=2&metatile=4',
                    options: { detectRetina:true }
                 },
